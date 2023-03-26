@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container ">
+    <form action="/" method="POST">
+        {% csrf_token %}
+        <div class="mb-3 mt-3">
+            <input type="text" class="form-control" name="username" placeholder="Enter Your Username">
+        </div>
+        <div class="mb-3">
+            <input type="password" class="form-control" name="password" placeholder="Enter Your Password">
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input">
+        </div>
+        <button type="submit" class="btn btn-primary">SignIn</button>
+    </form>
+    <p class="text-center">Don't have an account? <a href="/signup">Create an account</a>.</p>
+</div>
+
+
+{% endblock %}
