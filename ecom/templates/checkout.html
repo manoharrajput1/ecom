@@ -44,13 +44,13 @@
 
     <div class="col-lg-6">
         <div class="box-element">
-            <a class="btn btn-outline-dark" href="{% url 'cart' %}"> Back to Cart</a>
+            <a class="btn btn-white" href="{% url 'cart' %}"> Back to Cart</a>
             <hr>
             <h3>Order Summary</h3>
             <hr>
             {% for item in items %}
             <div class="cart-row">
-                <div style="flex:2"><img class="row-image" src="{{item.product.imageUrl}}"></div>
+                <div style="flex:2"class='text-center' ><img class="row-image" src="{{item.product.imageUrl}}"></div>
                 <div style="flex:2">
                     <p>{{item.product.name}}</p>
                 </div>
