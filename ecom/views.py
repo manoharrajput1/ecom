@@ -139,7 +139,7 @@ def processOrder(request):
 def predict(productId):
     products = Product.objects.all().values()
     df = pd.DataFrame(products)
-    df2 = df.drop(axis=1, columns=['id', 'name', 'product_image', 'desc', ])
+    df2 = df.drop(axis=1, columns=['id', 'name', 'product_image', 'desc','quantity' ])
     scaler = MinMaxScaler()
     x = df2.drop(axis=1, columns=['price'])
     y = pd.get_dummies(x)

@@ -14,7 +14,7 @@
                 <div class="justify-center">
                     <img class='image' src='{{i.imageUrl}}' alt="image">
                 </div>
-                <div class="d-inline-flex bg-secondary">
+                <div class="d-inline-flex bg-secondary rounded">
                     {% if i.quantity > 0 %}
                     <button class="btn text-light fs-6" onclick=updateUserOrder({{i.id}},'add')> Add To Cart </button>
                     {% else %} 

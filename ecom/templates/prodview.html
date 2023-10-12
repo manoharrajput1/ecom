@@ -34,7 +34,7 @@
             <div class="justify-center">
                 <img class='image' src='{{i.imageUrl}}' alt="">
             </div>
-            <div class="d-inline-flex bg-secondary">
+            <div class="d-inline-flex bg-secondary rounded">
                 <button onclick=updateUserOrder({{i.id}},'add') class="btn text-light">Add To Cart</button>
                 <a href="{% url 'prodView' i.id %}" class="btn text-light me-2">View</a>
                 <span class="text-light mt-2 me-2"> ₹{{i.price}}</span>
