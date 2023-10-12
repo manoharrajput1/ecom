@@ -6,25 +6,27 @@
     <div class="mt-3">
         <h2>{{product.0.subcategory}}</h2>
     </div>
-    <div class="container ">
-        <div class="row mt-2">
+    <div class="container">
+        <div class="row">
             {% for i in product %}
             <div class="col-3 text-center border rounded-3">
-                <h5>{{i.name|slice:15}}..</h5>
+                <h5>{{i.name|slice:15|upper}}..</h5>
                 <div class="justify-center">
-                    <img class='image' src='{{i.imageUrl}}' alt="">
+                    <img class='image' src='{{i.imageUrl}}' alt="image">
                 </div>
-                <div class="d-inline-flex">
-                    <button data-product="{{i.id}}" data-action="add" class="btn btn-sm add-btn update-cart but">Add To Cart</button>
-                    <a href="#" data-product="{{i.id}}" class="pt-2 btn btn-sm viewbtn anc">View</a>
-                    <span class="m-1 p-1"> ₹{{i.price}}</span>
+                <div class="d-inline-flex bg-secondary">
+                    {% if i.quantity > 0 %}
+                    <button class="btn text-light" onclick=updateUserOrder({{i.id}},'add')> Add To Cart </button>
+                    {% else %} 
+                    <button class="btn text-light"> Out of stock </button>
+                    {% endif %}
+                    <a href="{% url 'prodView' i.id %}" class="btn text-light">View</a>
+                    <span class="text-light"> ₹{{i.price}}</span>
                 </div>
             </div>
             {% endfor %}
         </div>
-
     </div>
-
 </div>
 {% endfor %}
 {% endblock %}

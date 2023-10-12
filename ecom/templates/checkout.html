@@ -50,7 +50,7 @@
             <hr>
             {% for item in items %}
             <div class="cart-row">
-                <div style="flex:2"class='text-center' ><img class="row-image" src="{{item.product.imageUrl}}"></div>
+                <div style="flex:2"class='text-center' ><img style='height: 50px' src="{{item.product.imageUrl}}"></div>
                 <div style="flex:2">
                     <p>{{item.product.name}}</p>
                 </div>
@@ -67,8 +67,7 @@
         </div>
     </div>
 </div>
-<script
-    src="https://www.paypal.com/sdk/js?client-id=AUfNL9-GnWyc_Pq3onAxuHWJJSifAvO2jl2APSwmQEkmE8aEeEFk8-ex3FFAMQ_qA2vA9_ioFLDwypzb&currency=USD"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AUfNL9-GnWyc_Pq3onAxuHWJJSifAvO2jl2APSwmQEkmE8aEeEFk8-ex3FFAMQ_qA2vA9_ioFLDwypzb&currency=USD"></script>
 <script>
     var total = '{{order.get_cart_total}}'
     paypal.Buttons({

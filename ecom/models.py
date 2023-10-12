@@ -12,6 +12,7 @@ class Product(models.Model):
     product_image = models.ImageField(upload_to='images')
     brand = models.CharField(max_length=70)
     processor = models.CharField(max_length=50, default=None)
+    quantity = models.IntegerField(default=0)
     
 
     def __str__(self):

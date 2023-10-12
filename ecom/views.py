@@ -1,11 +1,11 @@
 from django.contrib.auth.signals import user_logged_in
 from django.shortcuts import redirect, render
 from .models import *
-# import numpy as np
-# import pandas as pd
-# from sklearn.metrics.pairwise import cosine_similarity
-# from sklearn.preprocessing import MinMaxScaler
-# from itertools import chain
+import numpy as np
+import pandas as pd
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.preprocessing import MinMaxScaler
+from itertools import chain
 import json
 import datetime
 from django.http import JsonResponse
@@ -107,20 +107,11 @@ def updateItem(request):
     return JsonResponse('Item was added', safe=False)
 
 
-# def viewPred(request):
-#     data = json.loads(request.body)
-#     productId = data['productId']
-#     viewPred.newdata = predict(productId)
-#     return JsonResponse('Item viewed', safe=False)
-
-
 def cartData(request):
     user = request.user
-    # print(user)
     order, created = Order.objects.get_or_create(user=user)
     items = order.orderitem_set.all()
     cartItems = order.get_cart_items
-
     return {'cartItems': cartItems, 'order': order, 'items': items}
 
 
@@ -145,55 +136,49 @@ def processOrder(request):
     return JsonResponse('Payment submitted..', safe=False)
 
 
-# def predict(productId):
-#     products = Product.objects.all().values()
-#     df = pd.DataFrame(products)
-#     df2 = df.drop(axis=1, columns=['id', 'name', 'product_image', 'desc', ])
-#     scaler = MinMaxScaler()
-#     x = df2.drop(axis=1, columns=['price'])
-#     y = pd.get_dummies(x)
-#     data = df2[['price']]
-#     scaler.fit(data)
-#     data = scaler.transform(data)
-#     y['price'] = data
-#     # print(y)
-#     df_list = y.values.tolist()
-#     # print(df_list)
-#     datalist = []
-#     a = df_list[int(productId)-1]
-#     # print(a)
-#     for i in df_list:
-#         # print(i)
-#         ndata = cosine_similarity([a], [i])
-#         ndata = ndata.tolist()
-#         datalist.append(ndata)
-#     flatten_list = list(chain.from_iterable(datalist))
-#     newlist = list(chain.from_iterable(flatten_list))
-#     b = np.array(newlist)
-#     # print(b)
-#     idx = (-b).argsort()[1:6]
-#     # print(idx)
-#     return idx
-
-def viewPred(request):
-    data = json.loads(request.body)
-    productId = data['productId']
-    viewPred.productId = productId
-    return JsonResponse('Item viewed', safe=False)
+def predict(productId):
+    products = Product.objects.all().values()
+    df = pd.DataFrame(products)
+    df2 = df.drop(axis=1, columns=['id', 'name', 'product_image', 'desc', ])
+    scaler = MinMaxScaler()
+    x = df2.drop(axis=1, columns=['price'])
+    y = pd.get_dummies(x)
+    data = df2[['price']]
+    scaler.fit(data)
+    data = scaler.transform(data)
+    y['price'] = data
+    # print(y)
+    df_list = y.values.tolist()
+    # print(df_list)
+    datalist = []
+    a = df_list[int(productId)-1]
+    # print(a)
+    for i in df_list:
+        # print(i)
+        ndata = cosine_similarity([a], [i])
+        ndata = ndata.tolist()
+        datalist.append(ndata)
+    flatten_list = list(chain.from_iterable(datalist))
+    newlist = list(chain.from_iterable(flatten_list))
+    b = np.array(newlist)
+    # print(b)
+    idx = (-b).argsort()[1:5]
+    # print(idx)
+    return idx
 
 
 
-# def prodView(request, myid):
-#     productId = viewPred.productId
-#     data = cartData(request)
-#     cartItems = data['cartItems']
-#     product = Product.objects.filter(id=myid)
-#     idx = predict(productId)
-#     # print(idx)
-#     prodl = []
-#     for i in idx:
-#         # print(i)
-#         prod = Product.objects.get(id=i+1)
-#         prodl.append(prod)
-#     context = {'product': product, 'cartItems': cartItems, 'prodl':prodl}
-#     return render(request, 'prodview.html', context)
+def prodView(request, myid):
+    productId = myid
+    data = cartData(request)
+    cartItems = data['cartItems']
+    product = Product.objects.filter(id=myid)
+    idx = predict(productId)
+    # print(idx)
+    prodl = []
+    for i in idx:
+        # print(i)
+        prod = Product.objects.get(id=i+1)
+        prodl.append(prod)
+    context = {'product': product, 'cartItems': cartItems, 'prodl':prodl}
+    return render(request, 'prodview.html', context)

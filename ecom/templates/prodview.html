@@ -1,43 +1,47 @@
-<!-- {% extends 'base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block body %}
-<a class="btn btn-outline-dark" href="{% url 'index' %}"> Home</a>
+<a class="btn btn-inline-dark" href="{% url 'index' %}"> Home</a>
 <div class="container-fluid mt-2">
-    
+
     {% for i in product %}
     <div class="row">
-        
-        <br>
         <div class="col-3 justify-center text-center">
-            <img class="img" src='{{i.imageUrl}}' alt="" height="200px" width="170px">
+            <img class='image' src='{{i.imageUrl}}' alt="">
         </div>
         <div class="col-9 justify-center">
             <h5>{{i.name}}</h5>
             <div>
-                <button data-product="{{i.id}}" data-action="add"
-                    class="btn btn-outline-secondary add-btn update-cart">Add To Cart</button>
-                <p>{{i.price}}</p>
-                <p>{{i.desc}}</p>
+                {% if i.quantity > 0 %}
+                <button onclick=updateUserOrder({{i.id}},'add') class="btn bg-secondary text-light">Add To Cart</button>
+                {% else %}
+                <button class="btn text-light"> Out of stock </button>
+                {% endif %}
+                <p> <b>Price: </b> {{i.price}}</p>
+                <p> <b>Description :</b> {{i.desc}}</p>
+                <p> <b>Processor: </b> {{i.processor}}</p>
             </div>
         </div>
     </div>
     {% endfor %}
 </div>
-<div class="container-fluid mt-2">
+<div class="container">
     <h6>Similar Products</h6>
-    {% for i in prodl %}
-    <div class="box">
-        <h5>{{i.name|slice:15}}..</h5>
-        <img src='{{i.imageUrl}}' class='imgage' alt="">
-        <div class="d-flex flex-row bd-highlight mh-80 mb-3">
-            <div class="p-2 bd-highlight"><button data-product="{{i.id}}" data-action="add"
-                    class="btn btn-sm add-btn update-cart newbtn">Add To Cart</button></div>
-            <div class="p-2 bd-highlight"><a href="{% url 'viewPred' i.id %}" data-product="{{i.id}}"
-                    class="btn btn-sm viewbtn mt-2 newbtn">View</a></div>
-            <div class="p-2 bd-highlight mt-2"> ₹{{i.price}}</div>
+    <div class="row ">
+        {% for i in prodl %}
+        <div class="col-3 text-center border rounded-3">
+            <h5>{{i.name|slice:15}}..</h5>
+            <div class="justify-center">
+                <img class='image' src='{{i.imageUrl}}' alt="">
+            </div>
+            <div class="d-inline-flex bg-secondary">
+                <button onclick=updateUserOrder({{i.id}},'add') class="btn text-light">Add To Cart</button>
+                <a href="{% url 'prodView' i.id %}" class="btn text-light">View</a>
+                <span class="text-light"> ₹{{i.price}}</span>
+            </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
 
-{% endblock %} -->
+{% endblock %}
