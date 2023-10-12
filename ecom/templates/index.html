@@ -16,12 +16,12 @@
                 </div>
                 <div class="d-inline-flex bg-secondary">
                     {% if i.quantity > 0 %}
-                    <button class="btn text-light" onclick=updateUserOrder({{i.id}},'add')> Add To Cart </button>
+                    <button class="btn text-light fs-6" onclick=updateUserOrder({{i.id}},'add')> Add To Cart </button>
                     {% else %} 
                     <button class="btn text-light"> Out of stock </button>
                     {% endif %}
-                    <a href="{% url 'prodView' i.id %}" class="btn text-light">View</a>
-                    <span class="text-light"> ₹{{i.price}}</span>
+                    <a href="{% url 'prodView' i.id %}" class="btn text-light me-2">View</a>
+                    <span class="text-light mt-2 me-2"> ₹{{i.price}}</span>
                 </div>
             </div>
             {% endfor %}

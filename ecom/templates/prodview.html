@@ -36,8 +36,8 @@
             </div>
             <div class="d-inline-flex bg-secondary">
                 <button onclick=updateUserOrder({{i.id}},'add') class="btn text-light">Add To Cart</button>
-                <a href="{% url 'prodView' i.id %}" class="btn text-light">View</a>
-                <span class="text-light"> ₹{{i.price}}</span>
+                <a href="{% url 'prodView' i.id %}" class="btn text-light me-2">View</a>
+                <span class="text-light mt-2 me-2"> ₹{{i.price}}</span>
             </div>
         </div>
         {% endfor %}
